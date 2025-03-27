@@ -52,7 +52,22 @@ void MenuScreen::syncIndicators(uint8_t index, MenuRenderer* renderer) {
 bool MenuScreen::process(LcdMenu* menu, const unsigned char command) {
     MenuRenderer* renderer = menu->getRenderer();
     syncIndicators(cursor - view, renderer);
-    if (items[cursor]->process(menu, command)) return true;
+
+    //handle possible revesing of UP and DOWN commands    
+    unsigned char itemCommand = command;
+    if (menu->reverseUpDown) {
+        switch (command) {
+            case UP:
+                itemCommand = DOWN;
+                break;
+            case DOWN:
+                itemCommand = UP;
+                break;
+            default:
+                break;
+        }
+    }
+    if (items[cursor]->process(menu, itemCommand)) return true;
     switch (command) {
         case UP:
             renderer->viewShift = 0;

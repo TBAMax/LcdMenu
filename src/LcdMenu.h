@@ -59,6 +59,11 @@ class LcdMenu {
 
   public:
     /**
+     * @brief  Reverse the UP and DOWN commands when editing items
+     * 
+     */
+    bool reverseUpDown = false;
+    /**
      * Construct new instance of `LcdMenu`.
      */
     LcdMenu(MenuRenderer& renderer) : renderer(renderer) {}
